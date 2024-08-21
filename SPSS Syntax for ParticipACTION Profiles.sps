@@ -53,23 +53,6 @@ GET DATA  /TYPE=TXT
 RESTORE. 
 CACHE. 
 EXECUTE. 
- 
-Data written to the working file. 
-4 variables and 500 cases written. 
-Variable: PAIntentionsraw    Type: String  Format : A6 
-Variable: PABehavioursraw    Type: String  Format : A6 
-Variable: PAHabitraw         Type: String  Format : A26 
-Variable: PAIdentityraw      Type: String  Format : A26 
- 
-Substitute the following to build syntax for these data. 
-  /VARIABLES= 
-   PAIntentionsraw A6 
-   PABehavioursraw A6 
-   PAHabitraw A26 
-   PAIdentityraw A26 
- 
-DATASET NAME DataSet2 WINDOW=FRONT.
-
 
 * Convert variables to numbers
 
@@ -88,27 +71,12 @@ EXECUTE.
 
 * Check for outliers
 
-EXAMINE VARIABLES=PAIntentionNumbers PABehaviourNumbers Identity Habit
-  /PLOT BOXPLOT STEMLEAF
-  /COMPARE GROUPS
-  /STATISTICS DESCRIPTIVES EXTREME
-  /CINTERVAL 95
-  /MISSING LISTWISE
-  /NOTOTAL.  
+EXAMINE VARIABLES=PAIntentionNumbers PABehaviourNumbers Habit Identity
+  /STATISTICS DESCRIPTIVES.
 
 * Recode outliers if needed 
 
-* Check for outliers again
-
-EXAMINE VARIABLES=PAIntentionNumbers PABehaviourNumbers Identity Habit
-  /PLOT BOXPLOT STEMLEAF
-  /COMPARE GROUPS
-  /STATISTICS DESCRIPTIVES EXTREME
-  /CINTERVAL 95
-  /MISSING LISTWISE
-  /NOTOTAL.
-
-* Examine descriptive statistics
+* Check for outliers again and examine descriptive statistics
 
 EXAMINE VARIABLES=PAIntentionNumbers PABehaviourNumbers Habit Identity
   /STATISTICS DESCRIPTIVES.
