@@ -34,7 +34,42 @@
 * Gardner, B., Abraham, C., Lally, P., & Bruijn, G.-J. de. (2012). Towards parsimony in habit measurement: Testing the convergent and predictive validity of an automaticity subscale of the Self-Report Habit Index. International Journal of Behavioral Nutrition and Physical Activity, 9(1), 1–12. https://doi.org/10.1186/1479-5868-9-102
 * Wilson, P. M., & Muon, S. (2008). Psychometric properties of the exercise identity scale in a university sample. International Journal of Sport and Exercise Psychology, 6(2), 115–131. https://doi.org/10.1080/1612197X.2008.9671857
 
-* Upload the data
+* Upload the data (you will need it edit the file path)
+
+GET DATA  /TYPE=TXT 
+  /FILE="/Users/YourUserName/sample_data.csv" 
+  /ENCODING='UTF8' 
+  /DELIMITERS="," 
+  /QUALIFIER='"' 
+  /ARRANGEMENT=DELIMITED 
+  /FIRSTCASE=2 
+  /DATATYPEMIN PERCENTAGE=95.0 
+  /VARIABLES= 
+  PAIntentionsraw AUTO 
+  PABehavioursraw AUTO 
+  PAHabitraw AUTO 
+  PAIdentityraw AUTO 
+  /MAP. 
+RESTORE. 
+CACHE. 
+EXECUTE. 
+ 
+Data written to the working file. 
+4 variables and 500 cases written. 
+Variable: PAIntentionsraw    Type: String  Format : A6 
+Variable: PABehavioursraw    Type: String  Format : A6 
+Variable: PAHabitraw         Type: String  Format : A26 
+Variable: PAIdentityraw      Type: String  Format : A26 
+ 
+Substitute the following to build syntax for these data. 
+  /VARIABLES= 
+   PAIntentionsraw A6 
+   PABehavioursraw A6 
+   PAHabitraw A26 
+   PAIdentityraw A26 
+ 
+DATASET NAME DataSet2 WINDOW=FRONT.
+
 
 * Convert variables to numbers
 
@@ -44,11 +79,11 @@ EXECUTE.
 RECODE PABehavioursraw ('0 days'=0) ('1 day'=1) ('2 days'=2) ('3 days'=3) ('4 days'=4)
     ('5 days'=5) ('6 days'=6) ('7 days'=7) INTO PABehaviourNumbers.
 EXECUTE.
-RECODE PAHabitraw Automatically ('Strongly disagree'=5) ('Disagree'=4) ('Neither agree '+
-    'nor disagree'=3) ('Agree'=2) ('Strongly agree'=1) INTO Habit.
+RECODE PAHabitraw ('Strongly Disagree'=1) ('Disagree'=2) ('Neither Agree '+
+    'nor Disagree'=3) ('Agree'=4) ('Strongly Agree'=5) INTO Habit.
 EXECUTE.
-RECODE PAIdentityraw ('Strongly disagree'=5) ('Disagree'=4) ('Neither agree nor '+
-    'disagree'=3) ('Agree'=2) ('Strongly agree'=1) INTO Identity.
+RECODE PAIdentityraw ('Strongly Disagree'=1) ('Disagree'=2) ('Neither Agree nor '+
+    'Disagree'=3) ('Agree'=4) ('Strongly Agree'=5) INTO Identity.
 EXECUTE.
 
 * Check for outliers
@@ -61,7 +96,7 @@ EXAMINE VARIABLES=PAIntentionNumbers PABehaviourNumbers Identity Habit
   /MISSING LISTWISE
   /NOTOTAL.  
 
-* Recode outliers
+* Recode outliers if needed 
 
 * Check for outliers again
 
@@ -72,6 +107,27 @@ EXAMINE VARIABLES=PAIntentionNumbers PABehaviourNumbers Identity Habit
   /CINTERVAL 95
   /MISSING LISTWISE
   /NOTOTAL.
+
+* Examine descriptive statistics
+
+EXAMINE VARIABLES=PAIntentionNumbers PABehaviourNumbers Habit Identity
+  /STATISTICS DESCRIPTIVES.
+
+* Recode PAIntentionNumbers into PAIntentions.
+RECODE PAIntentionNumbers (Lowest thru 2=0) (3 thru Highest=1) INTO PAIntentions.
+EXECUTE.
+
+* Recode PABehaviourNumbers into PABehaviours.
+RECODE PABehaviourNumbers (Lowest thru 2=0) (3 thru Highest=1) INTO PABehaviours.
+EXECUTE.
+
+* Recode Habit into PAHabit.
+RECODE Habit (Lowest thru 3=0) (4 thru Highest=1) INTO PAHabit.
+EXECUTE.
+
+* Recode Identity into PAIdentity.
+RECODE Identity (Lowest thru 3=0) (4 thru Highest=1) INTO PAIdentity.
+EXECUTE.
 
 * Create the following 8 profiles
 i.	Non-Intenders – both low
