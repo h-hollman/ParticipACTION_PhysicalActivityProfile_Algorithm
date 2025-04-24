@@ -1,4 +1,4 @@
-# RStudio Syntax for ParticipACTION Profile Algorithm
+# RStudio Syntax for ParticipACTION Persona Profile Classification
 
 # First install and activate the libraries
 
@@ -11,7 +11,7 @@ library(ggplot2)
 library(psych)
 library(knitr)
 
-# The algorithm requires the following four questions:
+# The classification requires the following four questions:
 
 # Q1. Physical Activity Behaviour
 # “In the past week, on how many days have you done a total of 30 minutes or more of PA, 
@@ -30,7 +30,7 @@ library(knitr)
 # “Engaging in PA for 30 minutes or more, most days of the week, is something I do without thinking” 
 # Responses scored on a 5-points Likert scale (1 = strongly disagree, 2 = disagree, 3 = neither agree nor disagree, 4 = agree, 5 = strongly agree). 
 # PA habit was measured with the third question from the Self-Report Behavioral Automaticity Index (Gardner et al., 2012).
-# This item was selected because it consistently resulted in the lowest overall internal consistency (Cronbach alpha) when dropped, using our algorithm development and testing datasets.
+# This item was selected because it consistently resulted in the lowest overall internal consistency (Cronbach alpha) when dropped, using our classification development and testing datasets.
 
 # Q4. Physical Activity Identity
 # “Others see me as someone who does PA regularly” 
